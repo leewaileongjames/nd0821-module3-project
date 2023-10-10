@@ -10,12 +10,14 @@ def train_model(X_train, y_train):
     ------
     X_train : np.array
         Training data.
+
     y_train : np.array
-        Labels.
+        Training labels.
+
     Returns
     -------
     model
-        Trained machine learning model.
+        Trained KNN model.
     """
 
     model = KNeighborsClassifier(n_neighbors=5)
@@ -32,8 +34,10 @@ def compute_model_metrics(y, preds):
     ------
     y : np.array
         Known labels, binarized.
+
     preds : np.array
         Predicted labels, binarized.
+
     Returns
     -------
     precision : float
@@ -51,10 +55,12 @@ def inference(model, X):
 
     Inputs
     ------
-    model : ???
-        Trained machine learning model.
+    model : 
+        Trained KNN model.
+
     X : np.array
         Data used for prediction.
+
     Returns
     -------
     preds : np.array

@@ -41,10 +41,22 @@ def test(split_data):
 
 def test_transform_data(train, test, cat_features, label='salary'):
     '''
-    Test transform_data
+    Tests the transform_data() function within src/data.py
 
-    :param df: Clean data
-    :param label: Name of label column
+    Inputs
+    ------
+    train : pd.DataFrame
+        Training dataset.
+
+    test : pd.DataFrame
+        Validation dataset.
+
+    cat_features : list[str]
+        A list containing the categorical features.
+
+    label : str
+        The column to be used as label.
+
     '''
     try:
         X_train, y_train, encoder, lb = dt.process_data(
@@ -108,10 +120,15 @@ def y_test():
 
 def test_train_model(X_train, y_train):
     '''
-    Test train_model
+    Tests the train_model() function within src/model.py
 
-    :param X_train: Training data
-    :param y_train: Training labels
+    Inputs
+    ------
+    X_train : np.array
+        Training data.
+
+    y_train : np.array
+        Training labels.
     '''
     try:
         model = md.train_model(X_train, y_train)
@@ -131,15 +148,17 @@ def test_train_model(X_train, y_train):
         print('train_model failed: model type is wrong')
         raise err
 
-
     pytest.model = model
 
 
 def test_inference(X_test):
     '''
-    Test inference function
+    Tests the inference() function within src/model.py
 
-    :param X_test: Test data
+    Inputs
+    ------
+    X : np.array
+        Data used for prediction.
     '''
     model = pytest.model
 
@@ -150,32 +169,3 @@ def test_inference(X_test):
         print('inference failed: no predictions returned')
         raise err
 
-"""
-@pytest.fixture(scope='module')
-def feature():
-    return 'education'
-
-
-@pytest.fixture(scope='module')
-def test(df):
-    test = train_test_split(df, test_size=0.20, random_state=42)[1]
-    return test
-
-
-def test_slice_metrics(feature, test, y_test):
-    '''
-    Test slice_metrics function
-
-    :param feature: feature to slice on
-    :param df: features and label
-    :param y_test: ground truth colums
-    '''
-    preds = pytest.preds
-    try:
-        metrics = ml.slice_metrics(feature, test, y_test, preds)
-        assert metrics.empty is False
-    except AssertionError as err:
-        print('slice_metrics failed: no metrics generated')
-        raise err
-
-"""
