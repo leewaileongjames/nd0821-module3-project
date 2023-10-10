@@ -6,6 +6,8 @@ Test the functions contained in:
 
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from os.path import dirname
+from os.path import abspath
 import src.model as md
 import src.data as dt
 import pytest
@@ -13,9 +15,11 @@ import numpy as np
 import pandas as pd
 
 
+current_dir = dirname(abspath(__file__))
+
 @pytest.fixture(scope='module')
 def df():
-    df = pd.read_csv('data/census.csv')
+    df = pd.read_csv(f'{current_dir}/data/census.csv')
     df = dt.clean_data(df)
     return df
 
