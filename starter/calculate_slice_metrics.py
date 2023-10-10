@@ -26,7 +26,15 @@ _, test = train_test_split(df, test_size=0.20, random_state=42)
 cat_features = test.select_dtypes(include=object).columns.tolist()
 cat_features.remove('salary')
 
+# Clears any existing content in the file
+with open('slice_output.txt', 'w') as file:
+    pass
+
+
 for feature in cat_features:
+    with open('slice_output.txt', 'a') as file:
+        file.write(f"\n\n=== Feature: {feature} ===\n")
+
     for category in test[feature].unique():
         test_slice = test[ test[feature] == category ]
         X_test_slice, y_test_slice, _, _ = dt.process_data(
@@ -41,11 +49,13 @@ for feature in cat_features:
         precision_slice, recall_slice, fbeta_slice = md.compute_model_metrics(
             y_test_slice,
             test_slice_preds)
-
-        print(f"{feature} -- {category}")
-        print(f"Precision: {precision_slice}")
-        print(f"Recall: {recall_slice}")
-        print(f"FBeta: {fbeta_slice}")
+        
+        with open(f'slice_output.txt', 'a') as file:
+            file.write(f"-- {category} --\n")
+            file.write(f"Precision: {precision_slice}\n")
+            file.write(f"Recall: {recall_slice}\n")
+            file.write(f"FBeta: {fbeta_slice}\n\n")
+    print(f"Calaulation for {feature} complete ...")
 
 
 
