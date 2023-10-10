@@ -2,17 +2,19 @@
 Code for deploying machine learning model as an API
 '''
 
+from pydantic import BaseModel, Field
+from fastapi import FastAPI
+from os.path import dirname
+from os.path import abspath
 import sys
-sys.path.append("..")
+
+d = dirname(dirname(abspath(__file__)))
+sys.path.append(d)
 
 import joblib
 import src.data as dt
 import src.model as md
 import pandas as pd
-from pydantic import BaseModel, Field
-from fastapi import FastAPI
-from os.path import dirname
-from os.path import abspath
 
 app = FastAPI()
 
@@ -37,7 +39,6 @@ class Census(BaseModel):
 
 @app.post("/predict")
 async def predict(data: Census):
-    d = dirname(dirname(abspath(__file__)))
     model = joblib.load(f'{d}/training_artifacts/model.pkl')
     encoder = joblib.load(f'{d}/training_artifacts/encoder.pkl')
 
