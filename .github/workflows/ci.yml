@@ -27,5 +27,20 @@ jobs:
           python-version: 3.8.3
           auto-activate-base: false
 
+      - name: Linting with flake8
+        run: flake8
+
       - name: Run pytest
         run: pytest -v
+
+  deploy:
+    name: Deploy to Render
+    needs: [build]
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: Deploy to render web service
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
