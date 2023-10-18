@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
+
 def clean_data(X):
     """ Cleans the data before it is being processed
 
@@ -25,11 +26,13 @@ def clean_data(X):
     X.columns = X.columns.str.replace(' ', '')
 
     # Removing leading whitespace in values
-    X = X.applymap(lambda x: x.strip() if type(x)==str else x)
+    X = X.applymap(lambda x: x.strip() if type(x) == str else x)
 
     # Handle missing values by dropping all entries containing missing values
-    indexMissing = X[ (X['workclass'] == '?') | (X['occupation'] == '?') | (X['native-country'] == '?') ].index
-    X.drop(indexMissing , inplace=True)
+    indexMissing = (X[(X['workclass'] == '?') |
+                    (X['occupation'] == '?') |
+                    (X['native-country'] == '?')].index)
+    X.drop(indexMissing, inplace=True)
 
     # Drop 'fnlgt' column due to insufficient information
     X.drop(['fnlgt'], axis=1, inplace=True)
@@ -37,29 +40,33 @@ def clean_data(X):
     return X
 
 
-def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
-):
+def process_data(X,
+                 categorical_features=[],
+                 label=None,
+                 training=True,
+                 encoder=None,
+                 lb=None):
     """ Process the data used in the machine learning pipeline.
 
-    Processes the data using one hot encoding for the categorical features and a
-    label binarizer for the labels. This can be used in either training or
-    inference/validation.
+    Processes the data using one hot encoding for the categorical features
+    and a label binarizer for the labels. This can be used in either
+    training or inference/validation.
 
-    Note: depending on the type of model used, you may want to add in functionality that
-    scales the continuous data.
+    Note: depending on the type of model used, you may want to add in
+    functionality that scales the continuous data.
 
     Inputs
     ------
     X : pd.DataFrame
-        Dataframe containing the features and label. Columns in `categorical_features`
+        Dataframe containing the features and label. Columns in
+        `categorical_features`
 
     categorical_features: list[str]
         List containing the names of the categorical features (default=[])
 
     label : str
-        Name of the label column in `X`. If None, then an empty array will be returned
-        for y (default=None)
+        Name of the label column in `X`. If None, then an empty array will
+        be returned for y (default=None)
 
     training : bool
         Indicator if training mode or inference/validation mode.
@@ -78,12 +85,12 @@ def process_data(
     y : np.array
         Processed labels if labeled=True, otherwise empty np.array.
     encoder : sklearn.preprocessing._encoders.OneHotEncoder
-        Trained OneHotEncoder if training is True, otherwise returns the encoder passed
-        in.
+        Trained OneHotEncoder if training is True, otherwise returns the
+        encoder passed in.
 
     lb : sklearn.preprocessing._label.LabelBinarizer
-        Trained LabelBinarizer if training is True, otherwise returns the binarizer
-        passed in.
+        Trained LabelBinarizer if training is True, otherwise returns the
+        binarizer passed in.
     """
 
     if label is not None:

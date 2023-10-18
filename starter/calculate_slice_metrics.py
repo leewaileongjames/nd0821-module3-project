@@ -5,7 +5,6 @@ Uses slice_metrics function from model.py to evaluate model on data slices
 
 import src.data as dt
 import src.model as md
-import numpy as np
 import pandas as pd
 import joblib
 from os.path import dirname
@@ -40,26 +39,23 @@ for feature in cat_features:
         file.write(f"\n\n=== Feature: {feature} ===\n")
 
     for category in test[feature].unique():
-        test_slice = test[ test[feature] == category ]
+        test_slice = test[test[feature] == category]
         X_test_slice, y_test_slice, _, _ = dt.process_data(
-                                                test_slice,
-                                                categorical_features=cat_features,
-                                                label='salary',
-                                                encoder=encoder,
-                                                lb=lb,
-                                                training=False)
+                                            test_slice,
+                                            categorical_features=cat_features,
+                                            label='salary',
+                                            encoder=encoder,
+                                            lb=lb,
+                                            training=False)
 
         test_slice_preds = md.inference(model, X_test_slice)
         precision_slice, recall_slice, fbeta_slice = md.compute_model_metrics(
             y_test_slice,
             test_slice_preds)
-        
+
         with open(f'{current_dir}/slice_output.txt', 'a') as file:
             file.write(f"-- {category} --\n")
             file.write(f"Precision: {precision_slice}\n")
             file.write(f"Recall: {recall_slice}\n")
             file.write(f"FBeta: {fbeta_slice}\n\n")
     print(f"Calaulation for {feature} complete ...")
-
-
-

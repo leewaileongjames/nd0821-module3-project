@@ -36,6 +36,7 @@ def low_salary_data():
 
     return data
 
+
 @pytest.fixture(scope='module')
 def high_salary_data():
     data = {"age": 53,
@@ -55,6 +56,7 @@ def high_salary_data():
 
     return data
 
+
 def test_low_salary(low_salary_data):
     '''
     Tests the "/predict" path of the API to return '0'
@@ -68,6 +70,7 @@ def test_low_salary(low_salary_data):
     r = client.post("/predict", data=data)
     assert r.status_code == 200
     assert r.json() == {"prediction": "<=50K"}
+
 
 def test_high_salary(high_salary_data):
     '''

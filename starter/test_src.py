@@ -17,11 +17,13 @@ import pandas as pd
 
 current_dir = dirname(abspath(__file__))
 
+
 @pytest.fixture(scope='module')
 def df():
     df = pd.read_csv(f'{current_dir}/data/census.csv')
     df = dt.clean_data(df)
     return df
+
 
 @pytest.fixture(scope='module')
 def cat_features(df):
@@ -29,14 +31,17 @@ def cat_features(df):
     cat_features.remove('salary')
     return cat_features
 
+
 @pytest.fixture(scope='module')
 def split_data(df):
     train, test = train_test_split(df, test_size=0.20, random_state=42)
     return train, test
 
+
 @pytest.fixture(scope='module')
 def train(split_data):
     return split_data[0]
+
 
 @pytest.fixture(scope='module')
 def test(split_data):
@@ -77,7 +82,7 @@ def test_transform_data(train, test, cat_features, label='salary'):
             lb=lb,
             training=False
         )
-    except:
+    except Exception:
         print("transform_data failed: function failed to run properly")
 
     try:
@@ -110,17 +115,21 @@ def test_transform_data(train, test, cat_features, label='salary'):
 def X_train():
     return pytest.X_train
 
+
 @pytest.fixture(scope='module')
 def y_train():
     return pytest.y_train
+
 
 @pytest.fixture(scope='module')
 def X_test():
     return pytest.X_test
 
+
 @pytest.fixture(scope='module')
 def y_test():
     return pytest.y_test
+
 
 def test_train_model(X_train, y_train):
     '''
@@ -136,7 +145,7 @@ def test_train_model(X_train, y_train):
     '''
     try:
         model = md.train_model(X_train, y_train)
-    except:
+    except Exception:
         print('train_model failed: function failed to run properly')
 
     try:
@@ -172,4 +181,3 @@ def test_inference(X_test):
     except AssertionError as err:
         print('inference failed: no predictions returned')
         raise err
-

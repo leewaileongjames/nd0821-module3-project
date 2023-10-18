@@ -6,7 +6,6 @@ from sklearn.model_selection import train_test_split
 from os.path import dirname
 from os.path import abspath
 import pandas as pd
-import numpy as np
 import src.model as md
 import src.data as dt
 import joblib
@@ -28,18 +27,18 @@ if __name__ == '__main__':
     cat_features.remove('salary')
 
     X_train, y_train, encoder, lb = dt.process_data(
-        train, 
-        categorical_features=cat_features, 
-        label="salary", 
+        train,
+        categorical_features=cat_features,
+        label="salary",
         training=True
     )
 
     X_test, y_test, encoder, lb = dt.process_data(
-        test, 
-        categorical_features=cat_features, 
-        label="salary", 
-        encoder=encoder, 
-        lb=lb, 
+        test,
+        categorical_features=cat_features,
+        label="salary",
+        encoder=encoder,
+        lb=lb,
         training=False
     )
 
