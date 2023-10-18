@@ -3,6 +3,8 @@ Train KNN model on census data, Save model, encoder, binarizer
 """
 
 from sklearn.model_selection import train_test_split
+from os.path import dirname
+from os.path import abspath
 import pandas as pd
 import numpy as np
 import src.model as md
@@ -12,8 +14,10 @@ import joblib
 
 if __name__ == '__main__':
 
+    current_dir = dirname(abspath(__file__))
+
     # Import & Clean data
-    df = pd.read_csv('data/census.csv')
+    df = pd.read_csv(f'{current_dir}/data/census.csv')
     df = dt.clean_data(df)
 
     # Split data
@@ -52,6 +56,6 @@ if __name__ == '__main__':
     print(f"FBeta: {fbeta}")
 
     # Save the model, encoder and label binarizer
-    joblib.dump(model, "training_artifacts/model.pkl")
-    joblib.dump(encoder, "training_artifacts/encoder.pkl")
-    joblib.dump(lb, "training_artifacts/label_binarizer.pkl")
+    joblib.dump(model, f'{current_dir}/training_artifacts/model.pkl')
+    joblib.dump(encoder, f'{current_dir}/training_artifacts/encoder.pkl')
+    joblib.dump(lb, f'{current_dir}/training_artifacts/label_binarizer.pkl')
