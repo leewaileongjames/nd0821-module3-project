@@ -19,7 +19,7 @@ data = {"age": 28,
         "native_country": "United-States"
         }
 
-r = requests.post('http://127.0.0.1:8000/predict',
+r = requests.post('https://nd0821-module3-project.onrender.com/predict',
                   json=data)
 print(f"Request Status Code: {r.status_code}")
 print(f"Request Response (Model Inference Result): {r.json()}")
