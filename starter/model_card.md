@@ -66,6 +66,10 @@ Performance of the model evaluated against the evaluation data:
 
 During model training, there was no investigation done in terms of bias and there was no hyperparameter tuning being performed. Therefore, predictions obtained from the trained model is not guaranteed to be fair.
 
+The model's performance also varies with `race`.
+- For races `White` and `Black`, the model's performs better with  Precision exceeding `0.70`.
+- For other races such as `Asian-Pac-Islander`, `Amer-Indian-Eskimo`, etc, the model do not perform as well with Precision below `0.70`.
+
 <br/>
 
 ## Caveats and Recommendations
