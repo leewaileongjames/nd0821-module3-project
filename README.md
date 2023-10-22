@@ -42,6 +42,12 @@ conda env create -f environment.yml
 conda activate module-3-project
 ```
 
+2. Initiate training for model
+
+```bash!
+python ./starter/train_model.py
+```
+
 3. Calculate model's performance for various data slices
 
 ```bash!
