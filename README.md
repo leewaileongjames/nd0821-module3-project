@@ -42,7 +42,13 @@ conda env create -f environment.yml
 conda activate module-3-project
 ```
 
-2. Launch the FastAPI app by starting the server.
+3. Calculate model's performance for various data slices
+
+```bash!
+python ./starter/calculate_slice_metrics.py
+```
+
+4. Launch the FastAPI app by starting the server.
 ```bash!
 uvicorn --host 0.0.0.0 starter.app.main:app
 ```
